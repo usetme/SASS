@@ -1,0 +1,160 @@
+html,body{
+    height:100%;
+    font-family: "微软雅黑";
+}
+html,body,div{
+    padding:0;
+    margin: 0;
+}
+div:after{
+    　　content:".";
+    　　height:0;
+    　　visibility:hidden;
+    　　display:block;
+    　　clear:both;
+
+}
+.warp{
+    width:1200px;
+    margin:0 auto;
+}
+ul{
+    list-style: none;
+}
+#index{
+    background-image: url("../images/map.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    height:100%;
+}
+
+
+.top_text{
+    float: right;
+    margin-right:70px;
+}
+.top_text p{
+    float: left;
+    margin-right:14px;
+    font-size: 12px;
+    color: #3a8dff;
+}
+.top_text p a{
+    color: #3a8dff;
+    text-decoration: none;
+}
+.top_line{
+    height:38px;
+    width:100%;
+    border-bottom:1px solid #c1bebc;
+}
+.content{
+    text-align: center;
+    padding-top:168px;
+}
+.content .search{
+    margin-top:88px;
+    padding-left:280px;
+}
+.content .search p{
+    float: left;
+    margin-bottom:10px;
+}
+.content .search .search_text{
+    font-size:18px;
+    color: #3f362e;
+    height:32px;
+    line-height: 32px;
+}
+.content .search input{
+    width: 372px;
+    height:32px;
+    border:1px solid #ffa23f;
+    line-height: 32px;
+    margin-left:20px;
+}
+.content .search .search_btn{
+    display: block;
+    width:100px;
+    height:36px;
+    background-color:#ffa23f;
+    color:#fff;
+    font-size: 14px;
+    line-height: 32px;
+    margin-top:16px;
+}
+.content .search ul{
+    float: left;
+    display: block;
+    width:100px;
+    margin-left:-46px;
+    margin-top:4px;
+    height:32px;
+}
+.content .search ul a{
+    font-size:12px;
+    color:#3190d9;
+}
+.content .box{
+    font-size:16px;
+    color:#3f362e;
+    width:340px;
+    padding-left:360px;
+}
+.content .footer{
+    margin-top:130px;
+    font-size:12px;
+}
+
+
+
+
+
+
+
+
+
+.mian_page .mianpage_content{
+    width:890px;
+    display: inline-block;
+    overflow: hidden;
+}
+.mian_page .mianpage_content h3{
+    padding-left:40px;
+}
+.mian_page .mianpage_content .main_ul{
+    height:80px;
+}
+.mian_page .mianpage_content .main_ul ul{
+    float: left;
+}
+.mian_page .mianpage_content .main_bot{
+    padding-left:40px;
+}
+.mian_page .mianpage_content .content_line{
+    width:890px;
+    border-top:1px solid #c1bebc;
+    margin-left:40px;
+}
+.mian_page .warp .mianpage_content{
+    padding-left:155px;
+}
+.mian_page .main-bot{
+    height:36px;
+    padding-left:32px;
+}
+.mian_page .main-bot p{
+    float: left;
+    margin-right:50px;
+    font-style:italic;
+}
+
+
+
+
+#login{
+    background-image: url("../images/bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    height:1080px;
+}

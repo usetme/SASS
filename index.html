@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>智IP</title>
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/pagination.css">
+  <script src="../assets/js/jquery-2.2.1.min.js"></script>
+  <script src="../assets/js/vue.min.js"></script>
+  <script src="../assets/js/need.js"></script>
+</head>
+<body>
+<div id="app">
+  <div class="site-top">
+    <ul class="nav">
+      <li>
+        <a href="">专利检索<i class="triangle-down"></i></a>
+      </li>
+      <li>
+        <a href="">专利分析</a>
+      </li>
+      <li>
+        <a href="">价值评估</a>
+      </li>
+      <li>
+        <a href="">专利管理</a>
+      </li>
+      <li>
+        <a href="">专利交易</a>
+      </li>
+      <li>
+        <a href="">权代理</a>
+      </li>
+    </ul>
+    <ul class="nav pull-right">
+      <li>
+        <a href="">登录</a>
+      </li>
+      <li>
+        <a href="">在线帮助<i class="icon icon-1"></i></a>
+      </li>
+      <li>
+        <a href="">吐槽<i class="icon icon-2"></i></a>
+      </li>
+    </ul>
+  </div>
+  <div class="site-search">
+    <img src="../assets/css/images/logo.png" alt="">
+    <select name="" id="sel">
+      <option value="type">请选择</option>
+      <option value="address">地址</option>
+      <option value="inventor">发明人</option>
+    </select>
+    <input type="text" class="searchFor"/>
+    <button type="button" class="btn" v-on:click="list"><i class="icon icon-3"></i></button>
+  </div>
+  <div class="site-main">
+    <div class="sidebar">
+      <ul class="clearfix">
+        <li>
+          <a href="javascript:void(0)" class="special">专利类型<i class="triangle-down"></i></a>
+          <ul>
+            <li>
+              <a href="javascript:void(0)" v-on:click="choice1">发明</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" v-on:click="choice2" >实用新型</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" v-on:click="choice3">外观</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" v-on:click="choice4">发明授权</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" class="special">主申请人<i class="triangle-down"></i></a>
+          <ul v-for="order in orders.inventorList">
+            <li>
+              <a href="javascript:void(0)" class="pad0" v-on:click="person">{{order}}</a>
+            </li>
+          </ul>
+        </li>
+        <!--
+        <li>	
+          <a href="">主分类（部）</a>
+        </li>
+        <li>
+          <a href="">主分类（大类）</a>
+        </li>
+        <li>
+          <a href="">主分类（小类）</a>
+        </li>
+        <li>
+          <a href="">主分类（大组）</a>
+        </li>
+        <li>
+          <a href="">主分类（小组）</a>
+        </li>
+        <li>
+          <a href="">申请年度</a>
+        </li>
+        <li>
+          <a href="">公开年度</a>
+        </li>
+        <li>
+          <a href="">法律状态</a>
+        </li>
+        -->
+      </ul>
+    </div>
+    <div class="content columns">
+      <div class="left">
+        <div class="navbar clearfix">
+          <ul class="nav">
+            <li>
+              <a href="javascript:void(0);" id="style-one"><i class="icon icon-4"></i><span>列表式</span></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" id="style-two"><i class="icon icon-5"></i><span>三栏式</span></a>
+            </li>
+            <li>
+              <a href=""><i class="icon icon-6"></i><span>下载</span></a>
+            </li>
+            <li>
+              <a href=""><i class="icon icon-7"></i><span>收藏</span></a>
+            </li>
+            <li>
+              <a href=""><i class="icon icon-8"></i><span>排序</span></a>
+            </li>
+            <li>
+              <a href=""><i class="icon icon-9"></i><span>筛选专利状态</span></a>
+            </li>
+            <li>
+              <a href=""><i class="icon icon-10"></i><span>对比</span></a>
+            </li>
+            <li>
+              <a href=""><i class="icon icon-11"></i><span>结果分析</span></a>
+            </li>
+          </ul>
+        </div>
+        <div class="info_list">
+          <div class="search">
+            <div class="checkbox">
+              <input type="checkbox">
+              选中全部
+            </div>
+            <select name="" id="">
+              <option value="">相关顺序</option>
+            </select>
+            <select name="" id="">
+              <option value="">公开</option>
+            </select>
+            <span>共检索到<span class="num">{{orders.totalCount}}</span>件专利</span>
+          </div>
+          <div class="info_content" id="titcontent">
+          <ul v-for="order in orders.result">
+            <li>
+              <div class="top">
+                <div class="checkbox">
+                  <input type="checkbox">
+                </div>
+                <a href="javascript:void(0);" v-on:click="title" class="contenta">{{order._source.title}}<span>公开</span></a>
+                <a href=""><i class="icon icon-18"></i>下载</a>
+                <a href=""><img src="../assets/css/images/3a.png" id="special_img"></a>
+              </div>
+              <div class="details">
+                <p><span>申请号:{{order._source.catId}}</span> <span>申请日期:{{order._source.appDate}}</span><span>公开(公告)号:{{order._source.authId}}</span></p>
+                <p><span>申请(专利权)人:{{order._source.appOwner}}</span><span>发明(设计)人:{{order._source.inventor}}</span></p>
+              </div>
+              <div class="brief">
+                <span>{{order._source.abstarcts}}</span>
+              </div>
+              <div class="other">
+              <a href="">摘要</a>
+              -
+              <a href="">PDF说明书</a>
+              -
+              <a href="">文本说明书</a>
+              -
+              <a href="">说明书附图</a>
+              -
+              <a href="">法律状态</a>
+              -
+              <a href="">专利引证</a>
+            </div>
+              </div>
+              <nav class="nav_foot">
+    			<ul class="pagination" id="pagination">
+    				<li v-if="currentPage>1"><a href="javascript:void(0);" aria-label="Previous"
+    					v-on:click="prev"> <span aria-hidden="true">&laquo;</span>
+    				</a></li>
+    				<li v-for="p in totalPage"
+    					v-if="p<3 || p>totalPage-4 || (p>currentPage-4 && p<currentPage+2)"
+    					v-bind:class="{active: currentPage == p+1}"><span v-if="p>3 && p==currentPage-3">...</span>
+    					<a href="javascript:void(0);" v-on:click="toPage(p+1)">{{p+1}}</a> <span
+    					v-if="p<totalPage-4 && p==currentPage+1">...</span></li>
+    				<li v-if="currentPage<totalPage"><a href="javascript:void(0);" aria-label="Next"
+    					v-on:click="next"> <span aria-hidden="true">&raquo;</span>
+    				</a></li>
+    			</ul>
+    		</nav>
+            </li>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="right">
+        <div class="navbar clearfix">
+          <ul class="nav">
+            <li>
+              <a href=""><i class="icon icon-12"></i><span>摘要</span></a>
+            </li>
+            <li>
+              <a href=""><i class="icon icon-13"></i><span>PDF说明书</span></a>
+            </li>
+            <li>
+              <a href=""><i class="icon icon-14"></i><span>文本说明书</span></a>
+            </li>
+            <li>
+              <a href=""><i class="icon icon-15"></i><span>说明书附图</span></a>
+            </li>
+            <li>
+              <a href=""><i class="icon icon-16"></i><span>法律状态</span></a>
+            </li>
+            <li>
+              <a href=""><i class="icon icon-17"></i><span>专利引证</span></a>
+            </li>
+          </ul>
+          <ul class="nav pull-right">
+            <li>
+              <a href="javascript:void(0);" id="prevone">上一页</a>
+            </li>
+            <li>
+              <a href="javascript:void(0);" id="nextone">下一页</a>
+            </li>
+          </ul>
+        </div>
+        <div class="info-detail">
+        <div v-for="order in orders.result" class="info-content">
+          <div class="title">
+            <span>{{order._source.title}}</span>
+          </div>
+          <div class="detail">
+            <table>
+              <tbody>
+                <tr>
+                  <td>申请号</td>
+                  <td>{{order._source.catId}}</td>
+                  <td>申请日</td>
+                  <td>{{order._source.appDate}}</td>
+                </tr>
+                <tr>
+                  <td>公开(公告)号</td>
+                  <td>{{order._source.authId}}</td>
+                  <td>公开(公告)日</td>
+                  <td>{{order._source.authDate}}</td>
+                </tr>
+                <tr>
+                  <td>最终专利权人</td>
+                  <td colspan="3">{{order._source.appOwner}}</td>
+                </tr>
+                <tr>
+                  <td>地址</td>
+                  <td colspan="3">{{order._source.address}}</td>
+                </tr>
+                <tr>
+                  <td>住分类号</td>
+                  <td>{{order._source.otherDetail[0]}}</td>
+                  <td>国省代码</td>
+                  <td>2015.11.11</td>
+                </tr>
+                <tr>
+                  <td>申请(专利权)人</td>
+                  <td colspan="3">{{order._source.otherDetail[1]}}</td>
+                </tr>
+                <tr>
+                  <td>发明(设计)人</td>
+                  <td colspan="3">{{order._source.inventor}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="keys">
+            <div class="brief">
+              <p>摘要:{{order._source.abstarcts}}</p>
+              <p>语言:中文[ZH]</p>
+              <span></span>
+            </div>
+            <div class="img">
+              <img src={{order._source.image_thumb_urls}}>
+            </div>
+          </div>
+            </div>
+          </div>
+          <div class="more">
+            <a href="">
+            <p>查看更多</p><i class="icon icon-19"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
+  <script src="../assets/js/base.js"></script>
+  <script>
+	$(function(){
+		  var n=0; var s=1;
+		  console.log(n);
+    	  console.log(s);
+	  var page = getQueryStringRegExp("page") || 1;
+	  var rows = 5;
+	  $("#nextone").click(function(){
+		  if(n<4){
+			  n++;
+	    	  s++;
+		  }
+    	  console.log(n);
+    	  console.log(s);
+    	  	$(".info-detail .info-content:visible").css("display","none");
+    		$(".info-detail .info-content:nth-child("+s+")").css("display","block");
+	  });
+	  $("#prevone").click(function(){
+		  if(n>0){
+		  n--;
+		  s--;}
+		  console.log(n);
+    	  console.log(s);
+    	  $(".info-detail .info-content:visible").css("display","none");
+  		$(".info-detail .info-content:nth-child("+s+")").css("display","block");
+	  });
+		var vm=new Vue({
+			el:"#app",
+			data:{
+			  currentPage : page,
+	          totalPage : 0,
+	          orders:[],
+	          field:{},
+				key:{}
+			},
+			methods:{
+				list:function(){
+				 setTimeout(function(){
+	        		  $(".info-detail .info-content").not(":first-child").css("display","none");
+	        	  },1000)
+				 console.log($("#sel").val());
+				$.post("../patent/list",{
+					pageSize : rows,
+					pageNumber:vm.currentPage||page,
+					key	:$(".searchFor").val(),
+				},function(data){
+//							vm.currentPage = data.currentPage
+				            vm.totalPage = data.totalCount
+				            vm.orders=data
+				},"JSON")
+				},
+				drump:function(){
+					 if($(".searchFor").val()==""){
+						 $(".searchFor").val(vm.key);
+					 }
+//					 $(".searchFor").val().hide();
+					history.pushState("", "Title", location.href.split("&page")[0] + "&page=" + vm.currentPage);
+					$.post("../patent/list",{
+						pageSize : rows,
+						pageNumber:vm.currentPage,
+						key:$(".searchFor").val(),
+					},function(data){
+//								vm.currentPage = data.currentPage
+					            vm.totalPage = data.totalCount/rows
+					            vm.orders=data
+					},"JSON")
+				},
+				 prev : function(){
+		            if (vm.currentPage > 1)
+		              vm.currentPage--;
+		            setTimeout(function(){
+		        		  $(".info-detail .info-content").not(":first-child").css("display","none");
+		        	  },1000)
+		            vm.drump();
+		          },
+		          next : function(){
+		            if (vm.currentPage < vm.totalPage)
+		              vm.currentPage++;
+		            setTimeout(function(){
+		        		  $(".info-detail .info-content").not(":first-child").css("display","none");
+		        	  },1000)
+		            vm.drump();
+		          },
+		          toPage : function(page){
+		            vm.currentPage = page;
+		            setTimeout(function(){
+		        		  $(".info-detail .info-content").not(":first-child").css("display","none");
+		        	  },1000)
+		            vm.drump();
+		          },
+		          title:function(event){
+		        	  var me=$(event.target);
+		        	  console.log($(this));
+		        	  var arr=[];
+		        	  $("#titcontent ul").each(function(index,item){
+		        		arr.push(item)
+		        	  })
+		        	  for(var i=0;i<arr.length;i++){
+		        		  console.log(arr[i]);
+//		        		  if(arr[i].innerText==me.closest("ul").innerText){console.log(2)}
+		        	  }
+//		        	  console.log(arr)
+		          },
+		          choice1:function(event){
+		        	  vm.field="type";
+		        	  vm.key="fmgb";
+		        	  setTimeout(function(){
+		        		  $(".info-detail .info-content").not(":first-child").css("display","none");
+		        	  },1000)
+						$.post("../patent/list",{
+							pageSize : rows,
+							pageNumber: page,
+//							field1:"type",
+							key:"fmgb",
+						},function(data){
+						    vm.totalPage = data.totalCount/rows
+							vm.orders=data
+						},"JSON")
+					},
+		          choice2:function(){
+						 setTimeout(function(){
+			        		  $(".info-detail .info-content").not(":first-child").css("display","none");
+			        	  },1000)
+						 vm.field="type";
+			        	  vm.key="xxsq";
+						$.post("../patent/list",{
+							pageSize : rows,
+							pageNumber: page,
+//							field1:"type",
+							key:"xxsq",
+						},function(data){
+							 vm.totalPage = data.totalCount/rows
+							 vm.orders=data
+						},"JSON")
+					},
+		          choice3:function(){
+						 setTimeout(function(){
+			        		  $(".info-detail .info-content").not(":first-child").css("display","none");
+			        	  },1000)
+						vm.field="type";
+			        	  vm.key="wgsq";
+						$.post("../patent/list",{
+							pageSize : rows,
+							pageNumber: page,
+//							field1:"type",
+							key:"wgsq",
+						},function(data){
+							vm.totalPage = data.totalCount/rows
+							vm.orders=data
+						},"JSON")
+					},
+		          choice4:function(){
+						 setTimeout(function(){
+			        		  $(".info-detail .info-content").not(":first-child").css("display","none");
+			        	  },1000)
+						vm.field="type";
+			        	  vm.key="fmsq";
+						$.post("../patent/list",{
+							pageSize : rows,
+							pageNumber: page,
+//							field1:"type",
+							key:"fmsq",
+						},function(data){
+							vm.totalPage = data.totalCount/rows
+							vm.orders=data
+						},"JSON")
+					},
+		          person:function(event){
+						 setTimeout(function(){
+			        		  $(".info-detail .info-content").not(":first-child").css("display","none");
+			        	  },1000)
+						$.post("../patent/list",{
+							pageSize:rows,
+							pageNumber:page,
+							field1:"inventor",
+							keyWord1:$(event.target).text()
+						},function(data){
+							vm.currentPage = data.currentPage
+							vm.totalPage = data.totalPage/rows
+							vm.orders=data
+						},"JSON")
+					}
+			},
+		})
+	})
+</script>
+</body>
+</html>
